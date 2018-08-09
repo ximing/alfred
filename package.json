@@ -1,0 +1,24 @@
+{
+  "name": "alfred",
+  "version": "1.0.0",
+  "description": "custom alfred's workflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ximing/alfred.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ximing/alfred/issues"
+  },
+  "homepage": "https://github.com/ximing/alfred#readme",
+  "dependencies": {
+    "request": "^2.87.0",
+    "request-promise-native": "^1.0.5"
+  }
+}
