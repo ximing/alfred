@@ -1,6 +1,6 @@
 # coding: utf-8
 from clipboard import get_paste_img_file
-from upload import upload_file
+from upload import upload_local_file
 import util
 import os
 import subprocess
@@ -17,13 +17,13 @@ if not config:
     util.open_with_editor(util.CONFIG_FILE)
     sys.exit(0)
 
-url = 'https://%s/%s' % (config['endpoint'], config['prefix'])
+url = 'https://%s/%s/%s' % (config['endpoint'],config['tenantId'],config['bucket'])
 
 img_file, need_format, format = get_paste_img_file()
 if img_file:
     # has image
     # use time to generate a unique upload_file name, we can not use the tmp file name
-    upload_name = "%s.%s" % (int(time.time() * 1000), format)
+    upload_name = "%s/%s.%s" % (config['prefix'], int(time.time() * 1000), format)
     if need_format:
         size_str = subprocess.check_output('sips -g pixelWidth %s | tail -n1 | cut -d" " -f4' % img_file.name, shell=True)
         size = int(size_str.strip()) / 2
@@ -34,6 +34,9 @@ if img_file:
     os.system("echo '%s' | pbcopy" % markdown_url)
     os.system('osascript -e \'tell application "System Events" to keystroke "v" using command down\'')
     upload_file = util.try_compress_png(img_file, format!='gif')
-    if not upload_file(upload_file.name, upload_name): util.notice("上传图片到图床失败，请检查网络后重试")
+    if not upload_local_file(upload_file.name, upload_name):
+        util.notice("上传图片到图床失败，请检查网络后重试")
+    else:
+        util.notice("上传图片成功")
 else:
     util.notice("剪切版里没有图片！")

@@ -16,7 +16,7 @@ def read_config():
     cf = ConfigParser.ConfigParser()
     cf.read(CONFIG_FILE)
     s3_section = 's3'
-    keys = ('ak', 'sk', 'endpoint', 'bucket', 'signerVersion', 'prefix')
+    keys = ('ak', 'sk', 'endpoint', 'bucket', 'signerVersion', 'prefix','tenantId')
     try:
         res = map(lambda x: cf.get(s3_section, x), keys)
     except ConfigParser.NoOptionError:
